@@ -1,22 +1,23 @@
 # AgriAssist Nigeria 🌾
+# AgriAssist Nigeria - All States 🇳🇬
 
-A cloud-based agricultural advisory web application built for the 3MTT NextGen DevOps Capstone Project.
+**Live App**: https://agriassist-nigeria.onrender.com
 
-## 🎯 Problem Statement
-Nigerian farmers often lack access to timely information on crop planting seasons and local weather conditions, which affects yield and income.
+A DevOps capstone project for 3MTT NextGen. Helping farmers across all 36 States + FCT with weather data and crop calendar advice.
 
-## ✅ Solution
-AgriAssist provides:
-1.  **Crop Calendar**: Planting and harvesting information for 20 major crops grown in Nigeria
-2.  **Real-Time Weather**: Current temperature and wind data for all 36 States + FCT using Open-Meteo API
-3.  **Full DevOps Pipeline**: Containerized with Docker, Automated CI/CD with GitHub Actions, Deployed on Render
+## 🚀 Features
+- **Weather by State**: Real-time weather for all 36 States + FCT using OpenWeather API
+- **Crop Calendar Advisor**: Planting and harvest advice for 20+ Nigerian crops
+- **Mobile Responsive**: Works perfectly on phone and desktop
 
-## 🛠️ Tech Stack & DevOps Tools
+## 🛠️ Tech Stack & DevOps
 - **Frontend**: HTML5, CSS3, JavaScript
 - **Containerization**: Docker, Nginx
-- **CI/CD**: GitHub Actions
-- **Cloud Deployment**: Render.com
-- **API**: Open-Meteo Weather API
+- **CI/CD**: GitHub Actions - Auto build and push to Docker Hub
+- **Cloud Hosting**: Render.com
+- **Version Control**: Git & GitHub
 
-## 🚀 DevOps Pipeline
-`GitHub Push` → `GitHub Actions Build + Test Docker Image` → `Auto Deploy to Render`
+## ⚡ How to Run Locally
+```bash
+docker build -t agriassist-nigeria .
+docker run -p 8080:80 agriassist-nigeria
