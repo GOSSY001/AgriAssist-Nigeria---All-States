@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriAssist Nigeria - Crop Calendar & Weather</title>
+    <style>
+        body { font-family: Arial; background: #e8f5e9; text-align: center; padding: 20px; }
+       .card { background: white; padding: 25px; border-radius: 12px; max-width: 650px; margin: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        select, button { padding: 12px; margin: 10px; width: 90%; border-radius: 8px; border: 2px solid #2e7d32; font-size: 16px; }
+        button { background: #2e7d32; color: white; cursor: pointer; font-weight: bold; }
+        button:hover { background: #1b5e20; }
+        #result { margin-top: 20px; text-align: left; background: #f1f8e9; padding: 15px; border-radius: 8px; }
+        h1 { color: #2e7d32; }
+       .section { margin-top: 20px; border-top: 1px dashed #ccc; padding-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🌾 AgriAssist Nigeria</h1>
+        <p><b>3MTT NextGen DevOps Capstone by Godspower Young</b></p>
+        <p><i>Helping farmers across all 36 States + FCT</i></p>
+
+        <div class="section">
+            <h3>1. Crop Calendar Advisor</h3>
+            <select id="cropSelect">
+                <option value="Maize">Maize</option>
+                <option value="Rice">Rice</option>
+                <option value="Yam">Yam</option>
+                <option value="Cassava">Cassava</option>
+                <option value="Beans">Beans</option>
+                <option value="Sorghum">Sorghum</option>
+                <option value="Millet">Millet</option>
+                <option value="Groundnut">Groundnut</option>
+                <option value="Soybean">Soybean</option>
+                <option value="Tomato">Tomato</option>
+                <option value="Pepper">Pepper</option>
+                <option value="Onion">Onion</option>
+                <option value="Okra">Okra</option>
+                <option value="Cocoa">Cocoa</option>
+                <option value="Palm Oil">Palm Oil</option>
+                <option value="Cashew">Cashew</option>
+                <option value="Plantain">Plantain</option>
+                <option value="Watermelon">Watermelon</option>
+                <option value="Potato">Potato</option>
+                <option value="Sweet Potato">Sweet Potato</option>
+            </select>
+            <button onclick="showCropInfo()">Get Planting Advice</button>
+        </div>
+
+        <div class="section">
+            <h3>2. Weather by State</h3>
+            <select id="stateSelect">
+                <option value="6.5244,3.3792">Lagos</option>
+                <option value="9.0765,7.3986">Abuja FCT</option>
+                <option value="12.0022,8.5919">Kano</option>
+                <option value="7.3775,3.9470">Oyo</option>
+                <option value="6.4541,3.3947">Ogun</option>
+                <option value="5.4833,7.0333">Abia</option>
+                <option value="9.8321,8.8987">Kaduna</option>
+                <option value="4.8156,7.0498">Rivers</option>
+                <option value="7.0285,5.5964">Ondo</option>
+                <option value="6.3350,5.6045">Delta</option>
+                <option value="6.2488,7.1126">Enugu</option>
+                <option value="5.2107,5.7370">Bayelsa</option>
+                <option value="7.2405,6.2219">Kogi</option>
+                <option value="9.0578,8.6773">Nasarawa</option>
+                <option value="11.8611,10.2994">Borno</option>
+                <option value="10.5105,7.4165">Plateau</option>
+                <option value="12.4766,4.2064">Sokoto</option>
+                <option value="11.7058,7.6593">Katsina</option>
+                <option value="8.5000,4.5500">Kwara</option>
+                <option value="5.5312,5.7903">Edo</option>
+                <option value="6.0667,6.2667">Anambra</option>
+                <option value="5.0000,7.9167">Imo</option>
+                <option value="4.9767,8.3417">Cross River</option>
+                <option value="5.6645,8.0863">Ebonyi</option>
+                <option value="4.4431,7.6164">Akwa Ibom</option>
+                <option value="6.6939,3.1580">Osun</option>
+                <option value="8.1477,4.2711">Oyo</option>
+                <option value="12.2522,5.2248">Zamfara</option>
+                <option value="10.2811,12.9108">Bauchi</option>
+                <option value="11.0748,9.8376">Gombe</option>
+                <option value="10.9951,11.1755">Yobe</option>
+                <option value="10.3158,10.2966">Adamawa</option>
+                <option value="8.4799,10.8705">Benue</option>
+                <option value="10.6654,8.7317">Jigawa</option>
+                <option value="13.0950,7.7218">Kebbi</option>
+                <option value="8.9633,7.0736">Niger</option>
+                <option value="7.2544,5.2058">Ekiti</option>
+            </select>
+            <button onclick="getWeather()">Get State Weather</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const cropData = {
+            "Maize": "Planting: March-April & Aug-Sept. Harvest: 3-4 months. Tip: Plant in rows. Needs NPK fertilizer.",
+            "Rice": "Planting: May-June in rainy season. Harvest: 4-5 months. Tip: Needs flooded/irrigated fields.",
+            "Yam": "Planting: Feb-April. Harvest: 8-10 months. Tip: Use mounds. Stake for vines to climb.",
+            "Cassava": "Planting: Anytime in rainy season. Harvest: 9-12 months. Tip: Drought tolerant. Good for poor soil.",
+            "Beans": "Planting: June-July & Oct-Nov. Harvest: 2-3 months. Tip: Intercrop with maize to fix nitrogen.",
+            "Sorghum": "Planting: May-June. Harvest: 4 months. Tip: Drought resistant. Grows well in Northern Nigeria.",
+            "Millet": "Planting: June-July. Harvest: 3-4 months. Tip: Very drought tolerant. Staple in Sahel region.",
+            "Groundnut": "Planting: May-June. Harvest: 4-5 months. Tip: Needs sandy soil. Good source of oil.",
+            "Soybean": "Planting: June-July. Harvest: 3-4 months. Tip: Used for oil and animal feed. Fixes soil nitrogen.",
+            "Tomato": "Planting: Oct-Nov & Feb-Mar. Harvest: 3 months. Tip: Needs irrigation in dry season. Prone to pests.",
+            "Pepper": "Planting: March-April & Sept-Oct. Harvest: 3-4 months. Tip: Start in nursery then transplant.",
+            "Onion": "Planting: Oct-Nov. Harvest: 4-5 months. Tip: Needs well-drained soil. Dry for storage.",
+            "Okra": "Planting: March-April & Aug-Sept. Harvest: 2 months. Tip: Harvest pods every 2-3 days.",
+            "Cocoa": "Planting: May-July. Harvest: 3-5 years. Tip: Needs shade trees. Major export crop in SW Nigeria.",
+            "Palm Oil": "Planting: Anytime. Harvest: 3-4 years. Tip: Harvest bunches every 2 weeks once mature.",
+            "Cashew": "Planting: June-Aug. Harvest: 3-4 years. Tip: Major cash crop. Nuts harvested Jan-March.",
+            "Plantain": "Planting: Anytime in rainy season. Harvest: 9-12 months. Tip: Propagate from suckers.",
+            "Watermelon": "Planting: Feb-Mar & Oct-Nov. Harvest: 3 months. Tip: Needs lots of sun and water.",
+            "Potato": "Planting: Nov-Dec in Jos Plateau. Harvest: 3-4 months. Tip: Needs cool climate.",
+            "Sweet Potato": "Planting: Anytime in rainy season. Harvest: 4-5 months. Tip: Very easy to grow. Good for food security."
+        };
+
+        const stateNames = {
+            "6.5244,3.3792":"Lagos", "9.0765,7.3986":"Abuja FCT", "12.0022,8.5919":"Kano", "7.3775,3.9470":"Oyo",
+            "6.4541,3.3947":"Ogun", "5.4833,7.0333":"Abia", "9.8321,8.8987":"Kaduna", "4.8156,7.0498":"Rivers",
+            "7.0285,5.5964":"Ondo", "6.3350,5.6045":"Delta", "6.2488,7.1126":"Enugu", "5.2107,5.7370":"Bayelsa",
+            "7.2405,6.2219":"Kogi", "9.0578,8.6773":"Nasarawa", "11.8611,10.2994":"Borno", "10.5105,7.4165":"Plateau",
+            "12.4766,4.2064":"Sokoto", "11.7058,7.6593":"Katsina", "8.5000,4.5500":"Kwara", "5.5312,5.7903":"Edo",
+            "6.0667,6.2667":"Anambra", "5.0000,7.9167":"Imo", "4.9767,8.3417":"Cross River", "5.6645,8.0863":"Ebonyi",
+            "4.4431,7.6164":"Akwa Ibom", "6.6939,3.1580":"Osun", "12.2522,5.2248":"Zamfara", "10.2811,12.9108":"Bauchi",
+            "11.0748,9.8376":"Gombe", "10.9951,11.1755":"Yobe", "10.3158,10.2966":"Adamawa", "8.4799,10.8705":"Benue",
+            "10.6654,8.7317":"Jigawa", "13.0950,7.7218":"Kebbi", "8.9633,7.0736":"Niger", "7.2544,5.2058":"Ekiti"
+        };
+
+        function showCropInfo() {
+            const crop = document.getElementById('cropSelect').value;
+            document.getElementById('result').innerHTML = `<h4>🌱 ${crop} Information:</h4><p>${cropData[crop]}</p>`;
+        }
+
+        async function getWeather() {
+            const coords = document.getElementById('stateSelect').value;
+            const state = stateNames[coords];
+            const [lat, lon] = coords.split(',');
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
+
+            document.getElementById('result').innerHTML = `⏳ Loading ${state} weather...`;
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                const temp = data.current_weather.temperature;
+                const wind = data.current_weather.windspeed;
+                document.getElementById('result').innerHTML = `<h4>☀️ ${state} Weather Now:</h4><p>Temperature: ${temp}°C</p><p>Wind Speed: ${wind} km/h</p>`;
+            } catch(e) {
+                document.getElementById('result').innerHTML = `<p>❌ Could not fetch weather for ${state}. Check internet.</p>`;
+            }
+        }
+    </script>
+</body>
+                  </html>
